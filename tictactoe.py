@@ -1,114 +1,99 @@
-#---global variables---
-board = ["_","_","_",
-        "_","_","_",
-        "_","_","_"]
+from tkinter import *
+import tkinter.messagebox # for python 3
 
-game_still_going = True
-winner = None
-current_player = 'x'
+tk = Tk() # python 3
+tk.title('TIC TAC TOE')
 
-def display_board():
-  print(board[0]+ " | " + board[1]+ " | " + board[2])
-  print(board[3]+ " | " + board[4]+ " | " + board[5])
-  print(board[6]+ " | " + board[7]+ " | " + board[8])
+click = True
 
-def play_game():
+def checker (buttons) :
+    global click
+    
+    # check first if a player has won
+    if (button1['text'] =='X' and button2['text'] =='X' and button3['text'] =='X' or
+          button1['text'] =='X' and button5['text'] =='X' and button9['text'] =='X' or
+          button1['text'] =='X' and button4['text'] =='X' and button7['text'] =='X' or
+          button4['text'] =='X' and button5['text'] =='X' and button6['text'] =='X' or
+          button7['text'] =='X' and button8['text'] =='X' and button9['text'] =='X' or
+          button3['text'] =='X' and button5['text'] =='X' and button7['text'] =='X' or
+          button2['text'] =='X' and button5['text'] =='X' and button8['text'] =='X' or
+          button3['text'] =='X' and button6['text'] =='X' and button9['text'] =='X' ) :
+        tkinter.messagebox.showinfo ('WINNER X', 'PLAYER X WON THE GAME')
+         
+    elif (button1['text'] =='O' and button2['text'] =='O' and button3['text'] =='O' or
+          button1['text'] =='O' and button5['text'] =='O' and button9['text'] =='O' or
+          button1['text'] =='O' and button4['text'] =='O' and button7['text'] =='O' or
+          button4['text'] =='O' and button5['text'] =='O' and button6['text'] =='O' or
+          button7['text'] =='O' and button8['text'] =='O' and button9['text'] =='O' or
+          button3['text'] =='O' and button5['text'] =='O' and button7['text'] =='O' or
+          button2['text'] =='O' and button5['text'] =='O' and button8['text'] =='O' or
+          button3['text'] =='O' and button6['text'] =='O' and button9['text'] =='O' ) :
+        tkinter.messagebox.showinfo ('WINNER O', 'PLAYER O WON THE GAME')
+        
+    #  when there is no winner or wrong move
+    elif buttons['text'] != " " :
+        if (button1['text'] !=" " and button2['text'] !=" " and button3['text'] !=" " and
+          button1['text'] !=" " and button5['text'] !=" " and button9['text'] !=" " and
+          button1['text'] !=" " and button4['text'] !=" " and button7['text'] !=" " and
+          button4['text'] !=" " and button5['text'] !=" " and button6['text'] !=" " and
+          button7['text'] !=" " and button8['text'] !=" " and button9['text'] !=" " and
+          button3['text'] !=" " and button5['text'] !=" " and button7['text'] !=" " and
+          button2['text'] !=" " and button5['text'] !=" " and button8['text'] !=" " and
+          button3['text'] !=" " and button6['text'] !=" " and button9['text'] !=" ") :
+            tkinter.messagebox.showinfo ('DRAW', 'NO WINNER')
+        else :
+            tkinter.messagebox.showinfo ('WRONG MOVE', 'PLEASE SELECT ANOTHER BOX')
 
-  display_board()
-  while game_still_going:
+    elif buttons['text'] == " " and click == True :
+        buttons['text'] = "X"
+        buttons['fg'] = 'green'
+        click = False
+    elif buttons['text'] == " " and click == False :
+        buttons['text'] = "O"
+        buttons['fg'] = 'red'
+        click = True
 
-   handle_turn(current_player)
+buttons=StringVar()
 
-   check_if_game_over()
-  #flip to the other player
-   flip_player()
-  if winner == 'x' or winner == 'o':
-    print(winner + "won.")
-  elif winner == None:
-    print("Tie.")
+button1 = Button(tk, text=" ", font=('Arial 30 bold'), height=4 , width=8 , command=lambda:checker(button1))
+button1.grid(row=1, column=0, sticky=S+N+E+W)
 
-def handle_turn(current_player):
-    position= input("Spot your area from 1-9:")
-    position = int(position)-1
-    board[position] = "X"
-    display_board()
+button2 = Button(tk, text=" ", font=('Arial 30 bold'), height=4 , width=8 , command=lambda:checker(button2))
+button2.grid(row=1, column=1, sticky=S+N+E+W)
 
-def check_if_game_over():
-    check_for_winner()
-    check_if_tie()
+button3 = Button(tk, text=" ", font=('Arial 30 bold'), height=4 , width=8 , command=lambda:checker(button3))
+button3.grid(row=1, column=2, sticky=S+N+E+W)
 
-def check_for_winner():
-     global winner
-     row_winner = check_rows()
-     columns_winner = check_columns()
-     diagonal_winner = check_diagonals()
-     if row_winner:
-       winner = row_winner
-     elif columns_winner:
-       winner= columns_winner
-     elif diagonal_winner:
-       winner = diagonal_winner
-     return
+button4 = Button(tk, text=" ", font=('Arial 30 bold'), height=4 , width=8 , command=lambda:checker(button4))
+button4.grid(row=2, column=0, sticky=S+N+E+W)
 
-def check_rows():
-   global game_still_going
-   row1 = board[0] == board[1] == board[2] != "-"
-   row2 = board[3] == board[4] == board[5] != "-"
-   row3 = board[6] == board[7] == board[8] != "-"
-   if row1 or row2 or row3:
-     game_still_going = False
+button5 = Button(tk, text=" ", font=('Arial 30 bold'), height=4 , width=8 , command=lambda:checker(button5))
+button5.grid(row=2, column=1, sticky=S+N+E+W)
 
-   if row1:
+button6 = Button(tk, text=" ", font=('Arial 30 bold'), height=4 , width=8 , command=lambda:checker(button6))
+button6.grid(row=2, column=2, sticky=S+N+E+W)
 
-     return board[0]
-   elif row2:
-     return board[3]
-   elif row3:
-     return board[6]
-     return
+button7 = Button(tk, text=" ", font=('Arial 30 bold'), height=4 , width=8 , command=lambda:checker(button7))
+button7.grid(row=3, column=0, sticky=S+N+E+W)
 
-def check_columns():
-        global game_still_going
-        columns1 = board[0] == board[3] == board[6] != "-"
-        columns2 = board[1] == board[4] == board[7] != "-"
-        columns3 = board[2] == board[5] == board[8] != "-"
-        if columns1 or columns2 or columns3:
-                game_still_going = False
+button8 = Button(tk, text=" ", font=('Arial 30 bold'), height=4 , width=8 , command=lambda:checker(button8))
+button8.grid(row=3, column=1, sticky=S+N+E+W)
 
-        if columns1:
+button9 = Button(tk, text=" ", font=('Arial 30 bold'), height=4 , width=8 , command=lambda:checker(button9))
+button9.grid(row=3, column=2, sticky=S+N+E+W)
 
-                return board[0]
-        elif columns2:
-                return board[1]
-        elif columns3:
-                return board[2]
-        return
+def SetToBlank():
+    button1['text'] = " "
+    button2['text'] = " "
+    button3['text'] = " "
+    button4['text'] = " "
+    button5['text'] = " "
+    button6['text'] = " "
+    button7['text'] = " "
+    button8['text'] = " "
+    button9['text'] = " "
+    
+reset = Button(tk, text=' Play Again ', font=('Arial 20 '), fg='grey', command=SetToBlank)
+reset.grid(row=4,column=1)
 
-def check_diagonals():
-        global game_still_going
-        diagonal1 = board[0] == board[4] == board[8] != "-"
-        diagonal2 = board[6] == board[4] == board[2] != "-"
-
-        if diagonal1 or diagonal2 :
-                game_still_going = False
-
-        if diagonal1:
-
-                return board[0]
-        elif diagonal2:
-                return board[6]
-
-        return
-
-def check_if_tie():
-        return
-def flip_player():
-        return
-play_game()
-
-
-
-
-
-
-
+tk.mainloop()
