@@ -101,9 +101,9 @@ def check_diagonals():
         return
 
 def check_if_tie():
-     return
+        return
 def flip_player():
-     return
+        return
 play_game()
 
 
